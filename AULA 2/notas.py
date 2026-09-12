@@ -1,12 +1,26 @@
+import streamlit as st
+import pandas as pd
+from sklearn.linear_model import LinearRegression
 
-import streamlit as st #interface gráfica
-import pandas as pd # tratar dados
-from sklearn.linear_model import LinearRegression # o tipo de treinamento que vou aplicaar 
 
+st.title("Análise")
+st.header("Sistema de vendas - mês de setembro ⌨️")
 
 dados = pd.read_csv("vendas.csv")
 
-df = pd.DataFrame(dados)
+st.write("Dados de vendas:")
+st.dataframe(dados)
 
-st.write(dados)
-# analisar a previsão de vendas do mes de setembro
+dados = pd.read_csv("vendas.csv")
+
+X = dados[["mes"]]
+Y = dados["vendas"]
+
+
+model = LinearRegression().fit(X, Y)
+
+
+previsao = model.predict([[9]])[0]
+
+st.subheader("Previsão para setembro")
+st.write(f"Vendas previstas: {previsao:.2f}")
