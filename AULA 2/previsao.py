@@ -3,8 +3,9 @@ import pandas as pd # tratar dados
 from sklearn.linear_model import LinearRegression # o tipo de treinamento que vou aplicaar 
 
 
+st.title("Vendas")
+st.header("Previsão de vendas ⌨️")
 
-st.header("Previsão de vendas")
 
 dados_vendas = pd.DataFrame({
 
