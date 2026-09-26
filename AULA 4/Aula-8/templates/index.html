@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Digital - Classificador de Solicitações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 Central de Atendimento NLP</h1>
+            <p>Triagem automática de solicitações de clientes</p>
+        </header>
+
+        <section class="card">
+            <form method="POST">
+                <label for="texto">Digite a mensagem do cliente:</label>
+                <textarea id="texto" name="texto" rows="3" placeholder="Ex: Preciso bloquear meu cartão que foi roubado..." required></textarea>
+                <button type="submit">Classificar Solicitação</button>
+            </form>
+        </section>
+
+        {% if resultado %}
+        <section class="card result">
+            <h2>Resultado da Análise</h2>
+            <p><strong>Texto:</strong> "{{ resultado.texto }}"</p>
+            <p><strong>Categoria:</strong> <span class="badge">{{ resultado.categoria }}</span></p>
+            <p><strong>Lemas Identificados:</strong> <code>{{ resultado.lemmas | join(', ') }}</code></p>
+        </section>
+        {% endif %}
+
+        <section class="card">
+            <h2>Historico de Chamados (Processado via Pandas)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Texto</th>
+                        <th>Categoria</th>
+                        <th>Lemas</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in historico %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.texto }}</td>
+                        <td><span class="badge-small">{{ item.categoria }}</span></td>
+                        <td><code>{{ item.lemmas }}</code></td>
+                        <td>{{ item.data_criacao }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>
